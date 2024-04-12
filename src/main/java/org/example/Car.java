@@ -3,8 +3,9 @@ package org.example;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Data @AllArgsConstructor
 public class Car {
@@ -15,49 +16,44 @@ public class Car {
 
     public static Car withGasColorPassengers(int gas, String color, String... passengers) {
         List<String> p = Collections.unmodifiableList(Arrays.asList(passengers));
-        Car self = new Car(gas, color, p, null);
-        return self;
+        return new Car(gas, color, p, null);
     }
 
-    public static Car withGasColorPassengersAndTrunk(int gas, String color, String... passengers) {
-        List<String> p = Collections.unmodifiableList(Arrays.asList(passengers));
-        Car self = new Car(gas, color, p, Arrays.asList("jack", "wrench", "spare wheel"));
-        return self;
+    interface CarCriterion{
+        boolean test(Car c);
     }
 
-    public Car addGas(int g) {
-        return new Car(gasLevel + g, color, passengers, trunkContents);
+    static class RedCarCriterion implements CarCriterion{
+
+        @Override
+        public boolean test(Car c) {
+            return c.getColor().equals("Red");
+        }
     }
 
-    public Optional<List<String>> getTrunkContentsOpt() {
-        return Optional.ofNullable(trunkContents);
-    }
-
-    public static Predicate<Car> getColorCriterion(String ... colors) {
-        Set<String> colorSet = new TreeSet<>(Arrays.asList(colors));
-        return c -> colorSet.contains(c.getColor());
-    }
-
-    public static Predicate<Car> getRedCarCriterion() {
+    public static CarCriterion getRedCarCriterion(){
         return RED_CAR_CRITERION;
     }
 
-    private static final Predicate<Car> RED_CAR_CRITERION
-            = c -> c.color.equals("Red");
+    private static final CarCriterion RED_CAR_CRITERION = new RedCarCriterion();
+    static class BlackCarCriterion implements CarCriterion{
 
-    public static Predicate<Car> getGasLevelCarCriterion(final int threshold) {
-        return c -> c.gasLevel >= threshold;
+        @Override
+        public boolean test(Car c) {
+            return c.color.equals("Black");
+        }
     }
+    static class GasLevelCarCriterion implements  CarCriterion{
 
-    public static Predicate<Car> getFourPassengerCriterion() {
-        return c -> c.passengers.size() >= 4;
+        private int threshold;
+
+        public GasLevelCarCriterion(int threshold){
+            this.threshold = threshold;
+        }
+
+        @Override
+        public boolean test(Car c) {
+            return c.gasLevel >= threshold;
+        }
     }
-
-    public static Comparator<Car> getFuelComparator() {
-        return fuelComparator;
-    }
-
-    private static final Comparator<Car> fuelComparator = (o1, o2) -> o1.gasLevel - o2.gasLevel;
-
-
 }
