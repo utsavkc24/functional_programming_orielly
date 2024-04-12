@@ -7,7 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Data @AllArgsConstructor
+@Data
+@AllArgsConstructor
 public class Car {
     private final int gasLevel;
     private final String color;
@@ -19,20 +20,16 @@ public class Car {
         return new Car(gas, color, p, null);
     }
 
-    interface CarCriterion{
+    interface CarCriterion {
         boolean test(Car c);
     }
 
-    public static CarCriterion getRedCarCriterion(){
+    public static CarCriterion getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
-    private static final CarCriterion RED_CAR_CRITERION = new CarCriterion() {
-        @Override
-        public boolean test(Car c) {
-            return c.getColor().equals("Red");
-        }
-    };
+    private static final CarCriterion RED_CAR_CRITERION = c -> c.color.equals("RED");
+
 
     static class BlackCarCriterion implements CarCriterion {
 
@@ -41,11 +38,12 @@ public class Car {
             return c.color.equals("Black");
         }
     }
-    static class GasLevelCarCriterion implements  CarCriterion{
+
+    static class GasLevelCarCriterion implements CarCriterion {
 
         private int threshold;
 
-        public GasLevelCarCriterion(int threshold){
+        public GasLevelCarCriterion(int threshold) {
             this.threshold = threshold;
         }
 
