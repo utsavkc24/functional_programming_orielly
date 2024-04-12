@@ -23,20 +23,18 @@ public class Car {
         boolean test(Car c);
     }
 
-    static class RedCarCriterion implements CarCriterion{
-
-        @Override
-        public boolean test(Car c) {
-            return c.getColor().equals("Red");
-        }
-    }
-
     public static CarCriterion getRedCarCriterion(){
         return RED_CAR_CRITERION;
     }
 
-    private static final CarCriterion RED_CAR_CRITERION = new RedCarCriterion();
-    static class BlackCarCriterion implements CarCriterion{
+    private static final CarCriterion RED_CAR_CRITERION = new CarCriterion() {
+        @Override
+        public boolean test(Car c) {
+            return c.getColor().equals("Red");
+        }
+    };
+
+    static class BlackCarCriterion implements CarCriterion {
 
         @Override
         public boolean test(Car c) {
