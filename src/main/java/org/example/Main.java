@@ -23,8 +23,7 @@ public class Main {
 //        cars.sort(Car.getFuelComparator());
 
 //        showAll(filter(cars, Car.getRedCarCriterion()));
-        cars.sort(Car.getGasLevelComparator());
-        showAll(cars);
+        showAll(getByCriterion(cars, Car.getGasLevelCriterion(5)));
     }
 
 
@@ -35,7 +34,7 @@ public class Main {
         System.out.println("-------------------------------------");
     }
 
-    public static <E> List<E> filter(Iterable<E> lc, Car.Criterion criterion) {
+    public static <E> List<E> filter(Iterable<E> lc, Car.Criterion<E> criterion) {
         List<E> rv = new ArrayList<>();
         for (E c : lc) {
             if (criterion.test(c)) {
@@ -43,6 +42,17 @@ public class Main {
             }
         }
         return rv;
+    }
+
+    public static <E> List<E> getByCriterion(Iterable<E> in, Car.Criterion<E> crit){
+        List<E> output = new ArrayList<>();
+
+        for (E c : in){
+            if (crit.test(c)){
+                output.add(c);
+            }
+        }
+        return output;
     }
 }
 

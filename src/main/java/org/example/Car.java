@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -40,23 +39,7 @@ public class Car {
         }
     }
 
-    static class GasLevelCarCriterion implements Criterion<Car> {
-
-        private int threshold;
-
-        public GasLevelCarCriterion(int threshold) {
-            this.threshold = threshold;
-        }
-
-        @Override
-        public boolean test(Car c) {
-            return c.gasLevel >= threshold;
-        }
+    public static Criterion<Car> getGasLevelCriterion(int threshold){
+        return c -> c.gasLevel >= threshold;
     }
-
-    public static Comparator<Car> getGasLevelComparator(){
-        return GAS_LEVEL_COMPARATOR;
-    }
-    private static final Comparator<Car> GAS_LEVEL_COMPARATOR = (c1, c2) -> c1.gasLevel - c2.gasLevel;
-
 }
