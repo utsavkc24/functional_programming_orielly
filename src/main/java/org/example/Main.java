@@ -3,7 +3,6 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 
 public class Main {
@@ -23,8 +22,11 @@ public class Main {
 //
 //        cars.sort(Car.getFuelComparator());
 
-        showAll(filter(cars, Car.getRedCarCriterion()));
+//        showAll(filter(cars, Car.getRedCarCriterion()));
+        cars.sort(Car.getGasLevelComparator());
+        showAll(cars);
     }
+
 
     public static <E> void showAll(List<E> lc) {
         for (E c : lc) {
@@ -33,9 +35,9 @@ public class Main {
         System.out.println("-------------------------------------");
     }
 
-    public static List<Car> filter(Iterable<Car> lc, Car.CarCriterion criterion) {
-        List<Car> rv = new ArrayList<>();
-        for (Car c : lc) {
+    public static <E> List<E> filter(Iterable<E> lc, Car.Criterion criterion) {
+        List<E> rv = new ArrayList<>();
+        for (E c : lc) {
             if (criterion.test(c)) {
                 rv.add(c);
             }
