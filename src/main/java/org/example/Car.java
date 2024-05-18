@@ -3,9 +3,7 @@ package org.example;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -39,7 +37,12 @@ public class Car {
         }
     }
 
-    public static Criterion<Car> getGasLevelCriterion(int threshold){
+    public static Criterion<Car> getGasLevelCriterion(int threshold) {
         return c -> c.gasLevel >= threshold;
+    }
+
+    public static Criterion<Car> getColorCriterion(String... color) {
+        Set<String> set = new HashSet<>(Arrays.asList(color));
+        return c -> set.contains(c.getColor());
     }
 }
