@@ -45,4 +45,11 @@ public class Car {
         Set<String> set = new HashSet<>(Arrays.asList(color));
         return c -> set.contains(c.getColor());
     }
+
+
+    // combining existing behaviour to new behaviour
+    //1. Invert the input behaviour
+    public static <E>Criterion<E> getInvertedBehaviour(Criterion<E> criterion){
+        return x -> !criterion.test(x);
+    }
 }

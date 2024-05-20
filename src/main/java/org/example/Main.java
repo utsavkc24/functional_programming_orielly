@@ -25,11 +25,13 @@ public class Main {
 //        showAll(filter(cars, Car.getRedCarCriterion()));
 //        showAll(getByCriterion(cars, Car.getGasLevelCriterion(5)));
 
-        showAll(getByCriterion(cars, Car.getColorCriterion("Red", "Black")));
+//        showAll(getByCriterion(cars, Car.getColorCriterion("Red", "Black")));
+        showAll(getByCriterion(cars, Car.getInvertedBehaviour(Car.getRedCarCriterion())));
     }
 
 
     public static <E> void showAll(List<E> lc) {
+
         for (E c : lc) {
             System.out.println(c);
         }
