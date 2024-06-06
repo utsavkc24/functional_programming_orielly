@@ -18,10 +18,7 @@ public class Car {
         return new Car(gas, color, p, null);
     }
 
-    @FunctionalInterface
-    interface Criterion<E> {
-        boolean test(E c);
-    }
+
 
     public static Criterion<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
@@ -49,7 +46,8 @@ public class Car {
 
     // combining existing behaviour to new behaviour
     //1. Invert the input behaviour
-    public static <E>Criterion<E> getInvertedBehaviour(Criterion<E> criterion){
+    public static <E> Criterion<E> getInvertedBehaviour(Criterion<E> criterion) {
         return x -> !criterion.test(x);
     }
+
 }
