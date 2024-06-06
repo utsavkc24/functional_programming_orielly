@@ -3,6 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 public class Main {
@@ -22,11 +23,11 @@ public class Main {
 //
 //        cars.sort(Car.getFuelComparator());
 
-        showAll(filter(cars, Car.getRedCarCriterion()));
+//        showAll(filter(cars, Car.getRedCarCriterion()));
 //        showAll(getByCriterion(cars, Car.getGasLevelCriterion(5)));
 
 //        showAll(getByCriterion(cars, Car.getColorCriterion("Red", "Black")));
-//        showAll(getByCriterion(cars, Car.getInvertedBehaviour(Car.getRedCarCriterion())));
+        showAll(getByCriterion(cars, Car.getInvertedBehaviour(Car.getRedCarCriterion())));
     }
 
 
@@ -38,7 +39,7 @@ public class Main {
         System.out.println("-------------------------------------");
     }
 
-    public static <E> List<E> filter(Iterable<E> lc, Criterion<E> criterion) {
+    public static <E> List<E> filter(Iterable<E> lc, Predicate<E> criterion) {
         List<E> rv = new ArrayList<>();
         for (E c : lc) {
             if (criterion.test(c)) {
@@ -48,7 +49,7 @@ public class Main {
         return rv;
     }
 
-    public static <E> List<E> getByCriterion(Iterable<E> in, Criterion<E> crit) {
+    public static <E> List<E> getByCriterion(Iterable<E> in, Predicate<E> crit) {
         List<E> output = new ArrayList<>();
 
         for (E c : in) {

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.*;
-
+import java.util.function.Predicate;
 @Data
 @AllArgsConstructor
 public class Car {
@@ -20,13 +20,13 @@ public class Car {
 
 
 
-    public static Criterion<Car> getRedCarCriterion() {
+    public static Predicate<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
 
-    private static final Criterion<Car> RED_CAR_CRITERION = c -> c.color.equals("Red");
+    private static final Predicate<Car> RED_CAR_CRITERION = c -> c.color.equals("Red");
 
-    static class BlackCarCriterion implements Criterion<Car> {
+    static class BlackCarCriterion implements Predicate<Car> {
 
         @Override
         public boolean test(Car c) {
@@ -34,11 +34,11 @@ public class Car {
         }
     }
 
-    public static Criterion<Car> getGasLevelCriterion(int threshold) {
+    public static Predicate<Car> getGasLevelCriterion(int threshold) {
         return c -> c.gasLevel >= threshold;
     }
 
-    public static Criterion<Car> getColorCriterion(String... color) {
+    public static Predicate<Car> getColorCriterion(String... color) {
         Set<String> set = new HashSet<>(Arrays.asList(color));
         return c -> set.contains(c.getColor());
     }
@@ -46,7 +46,7 @@ public class Car {
 
     // combining existing behaviour to new behaviour
     //1. Invert the input behaviour
-    public static <E> Criterion<E> getInvertedBehaviour(Criterion<E> criterion) {
+    public static <E> Predicate<E> getInvertedBehaviour(Predicate<E> criterion) {
         return x -> !criterion.test(x);
     }
 
