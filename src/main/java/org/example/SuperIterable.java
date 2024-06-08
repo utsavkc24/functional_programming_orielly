@@ -39,6 +39,14 @@ public class SuperIterable<E> implements Iterable<E> {
         return new SuperIterable<>(output);
     }
 
+
+    //3. Flatmap
+    public <F> SuperIterable<F> flatMap(Function<E, SuperIterable<F>> op) {
+        List<F> results = new ArrayList<>();
+        self.forEach(e -> op.apply(e).forEach(f -> results.add(f)));
+        return new SuperIterable<>(results);
+    }
+
     public static void main(String[] args) {
         SuperIterable<String> strings = new SuperIterable<>(
                 Arrays.asList("LightCoral", "pink", "Orange", "Gold", "plum", "Blue", "limegreen")
@@ -92,5 +100,21 @@ public class SuperIterable<E> implements Iterable<E> {
         carIter.forEach(c -> System.out.println(c));
         System.out.println("--------------------------------------------------");
         carIter.map(c -> c.changeGasFuelLevel(3)).forEach(c -> System.out.println(c));
+
+
+        System.out.println("-------------------------------------------------");
+
+        carIter
+                .filter(c -> c.getPassengers().size() > 3)
+                .flatMap(c -> new SuperIterable<>(c.getPassengers()))
+                .map(s -> s.toUpperCase())
+                .forEach(s -> System.out.println(s));
+
+
+        System.out.println("-------------------------------------------------");
+
+        carIter.map(Car::getGasLevel).forEach(System.out::println);
     }
+
+
 }
