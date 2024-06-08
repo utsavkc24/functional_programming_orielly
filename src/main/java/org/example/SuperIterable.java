@@ -70,5 +70,20 @@ public class SuperIterable<E> implements Iterable<E> {
                 .forEach(s -> System.out.println(s));
 
 
+        //3. Using Car list
+        SuperIterable<Car> carIter = new SuperIterable<>(
+                Arrays.asList(
+                        Car.withGasColorPassengers(6, "Red", "Fred", "Jim", "Sheila"),
+                        Car.withGasColorPassengers(3, "Octarine", "Rincewind", "Ridcully"),
+                        Car.withGasColorPassengers(9, "Black", "Weatherwax", "Magrat"),
+                        Car.withGasColorPassengers(7, "Green", "Valentine", "Gillian", "Anne", "Dr. Mahmoud"),
+                        Car.withGasColorPassengers(6, "Red", "Ender", "Hyrum", "Locke", "Bonzo")
+                )
+        );
+        carIter
+                .filter(c -> c.getGasLevel() >= 6)
+                .map(c -> c.getPassengers().get(0) + " is driving with lot of fuel")
+                .forEach(c -> System.out.println(c));
+
     }
 }
