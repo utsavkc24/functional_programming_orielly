@@ -85,5 +85,12 @@ public class SuperIterable<E> implements Iterable<E> {
                 .map(c -> c.getPassengers().get(0) + " is driving with lot of fuel")
                 .forEach(c -> System.out.println(c));
 
+        //4. Change the car's gas level using map
+        // Solution - we cannot use setGasLevel method inside map method, as map method expect as return type
+        // So, we will create a new method inside Car POJO class that returns new modified car object
+
+        carIter.forEach(c -> System.out.println(c));
+        System.out.println("--------------------------------------------------");
+        carIter.map(c -> c.changeGasFuelLevel(3)).forEach(c -> System.out.println(c));
     }
 }

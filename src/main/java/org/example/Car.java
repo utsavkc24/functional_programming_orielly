@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.*;
 import java.util.function.Predicate;
+
 @Data
 @AllArgsConstructor
 public class Car {
@@ -13,11 +14,15 @@ public class Car {
     private final List<String> passengers;
     private final List<String> trunkContents;
 
+
+    public Car changeGasFuelLevel(int g) {
+        return new Car(gasLevel + g, color, passengers, trunkContents);
+    }
+
     public static Car withGasColorPassengers(int gas, String color, String... passengers) {
         List<String> p = Collections.unmodifiableList(Arrays.asList(passengers));
         return new Car(gas, color, p, null);
     }
-
 
 
     public static Predicate<Car> getRedCarCriterion() {
