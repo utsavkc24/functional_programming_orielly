@@ -25,6 +25,13 @@ public class Car {
     }
 
 
+    public static Car withGasColorPassengersAndTrunk(int gas, String color, String... passengers) {
+        List<String> p = Collections.unmodifiableList(Arrays.asList(passengers));
+        Car self = new Car(gas, color, p, Arrays.asList("jack", "wrench", "spare wheel"));
+        return self;
+    }
+
+
     public static Predicate<Car> getRedCarCriterion() {
         return RED_CAR_CRITERION;
     }
